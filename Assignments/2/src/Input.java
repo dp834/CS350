@@ -1,4 +1,11 @@
-interface Input {
-	public String getUserResponse();
-}
 
+import java.util.*;
+
+/**
+ * 
+ */
+interface Input{
+
+    public String getUserResponse(); 
+
+}

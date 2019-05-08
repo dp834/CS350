@@ -1,11 +1,20 @@
 
+import java.util.*;
 
-public class ConsoleOutput implements Output{
-	
-	public ConsoleOutput(){};
+/**
+ * 
+ */
+public class ConsoleOutput implements Output {
 
-	public void promptUser(String prompt){
-		System.out.println(prompt);
-	}
+    public ConsoleOutput() {
+    }
+
+    /**
+     * @param output 
+     * @return
+     */
+    public void promptUser(String output) {
+       System.out.println(output); 
+    }
 
 }

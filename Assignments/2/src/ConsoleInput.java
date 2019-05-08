@@ -1,13 +1,25 @@
-import java.util.Scanner;
+
+import java.util.*;
+
+/**
+ * 
+ */
+public class ConsoleInput implements Input {
+
+    public Scanner scanner;
+    /**
+     * Default constructor
+     */
+    public ConsoleInput() {
+	this.scanner = new Scanner(System.in);
+    }
 
 
-public class ConsoleInput implements Input{
-	private Scanner scanner;
-	public ConsoleInput(){
-		this.scanner = new Scanner(System.in);
-	}
-	
-	public String getUserResponse(){
-		return scanner.next();
-	}
+    /**
+     * @return
+     */
+    public String getUserResponse() {
+        return scanner.next(); 
+    }
+
 }

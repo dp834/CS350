@@ -1,21 +1,55 @@
 
-public class Driver{
+import java.util.*;
 
-//	private Survey currentForm;
-	private int currentFormType;
-	private Input input;
-	private Output output;	
+/**
+ * 
+ */
+public class Driver {
 
-	public static void main(String args[]){
-		Input in  = new ConsoleInput();
+    /**
+     * Default constructor
+     */
+    public Driver() {
+    }
+
+    /**
+     * 
+     */
+    private Survey currentForm;
+
+    /**
+     * 
+     */
+    private int currentFormType;
+
+
+
+
+    /**
+     * @param args 
+     * @return
+     */
+    public void main(String args) {
+        // TODO implement here
+        
+    }
+
+    /**
+     * @return
+     */
+    private void selectType() {
+        // TODO implement here
+        
+    }
+
+
+	public static void main(String[] args){
+		Input in = new ConsoleInput();
 		Output out = new ConsoleOutput();
-		out.promptUser("Please enter your name");
-		String resp = in.getUserResponse();
-		out.promptUser("Hello " + resp);
-	}
 
-	public void selectType(){
-		
+		out
+
+
 	}
 
 }
