@@ -46,10 +46,9 @@ public class Driver {
 	public static void main(String[] args){
 		Input in = new ConsoleInput();
 		Output out = new ConsoleOutput();
-
-		out
-
-
+		out.promptUser("Enter your name");
+		out.promptUser("Hello " + in.getUserResponse());
+		
 	}
 
 }

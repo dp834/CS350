@@ -35,7 +35,7 @@ public class Ranking extends Matching {
     /**
      * 
      */
-    protected void choices[1][];
+    protected String choices[][];
 
     /**
      * 
@@ -99,6 +99,7 @@ public class Ranking extends Matching {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }

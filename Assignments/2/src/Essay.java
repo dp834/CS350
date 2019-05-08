@@ -94,6 +94,7 @@ public class Essay extends Question {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }

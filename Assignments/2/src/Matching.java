@@ -35,7 +35,7 @@ public class Matching extends Question {
     /**
      * 
      */
-    protected void choices[][];
+    protected String choices[][];
 
     /**
      * 
@@ -99,6 +99,7 @@ public class Matching extends Question {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }

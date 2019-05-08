@@ -86,6 +86,7 @@ public class Test extends Survey {
      * @return
      */
     public static Test loadFromFile(Input input, Output output) {
+		return null;
         // TODO implement here
         
     }

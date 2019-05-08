@@ -99,6 +99,7 @@ public class TrueFalse extends MultipleChoice {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }

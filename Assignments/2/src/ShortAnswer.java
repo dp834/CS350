@@ -99,6 +99,7 @@ public class ShortAnswer extends Essay {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }

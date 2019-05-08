@@ -33,6 +33,7 @@ public class ResponseCorrectAnswer {
      * @return
      */
     public ResponseCorrectAnswer ResponseCorrectAnswer() {
+		return null;
         // TODO implement here
         
     }
@@ -41,6 +42,7 @@ public class ResponseCorrectAnswer {
      * @return
      */
     public ArrayList<String> getResponses() {
+		return responses;
         // TODO implement here
         
     }
@@ -65,6 +67,7 @@ public class ResponseCorrectAnswer {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }
@@ -73,6 +76,7 @@ public class ResponseCorrectAnswer {
      * @return
      */
     public ArrayList<String> tabulate() {
+		return responses;
         // TODO implement here
         
     }

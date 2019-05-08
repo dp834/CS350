@@ -99,6 +99,7 @@ public class MultipleChoice extends Question {
      * @return
      */
     public ArrayList<Boolean> grade() {
+		return null;
         // TODO implement here
         
     }
