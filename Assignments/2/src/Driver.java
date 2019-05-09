@@ -6,49 +6,156 @@ import java.util.*;
  */
 public class Driver {
 
+	public static final int FORM_INVALID = 0;
+	public static final int FORM_SURVEY  = 1;
+	public static final int FORM_TEST    = 2;
+	public static final int FORM_EXIT	 = 3;
+
+	private static final int MENU_PROMPT_FORM_CHOICE = 1;
+	private static final int MENU_PROMPT_FORM = 2;
+	
+
+	
+	private Input in;
+	private Output out;
+	
+    private Survey currentForm;
+    private int currentFormType;
+
     /**
      * Default constructor
      */
-    public Driver() {
+    public Driver(Output out, Input in) {
+		this.out = out;
+		this.in = in;
+		this.currentFormType = FORM_INVALID;
+
     }
 
-    /**
-     * 
-     */
-    private Survey currentForm;
 
-    /**
-     * 
-     */
-    private int currentFormType;
+	public void run(){
+		this.selectType();
+		while(this.currentFormType != this.FORM_EXIT){
+			this.formMenu();	
+			this.selectType();
+		}
+		this.out.promptUser("Exiting, goodbye");
+	}
 
-
-
-
-    /**
-     * @param args 
-     * @return
-     */
-    public void main(String args) {
-        // TODO implement here
-        
-    }
 
     /**
      * @return
      */
     private void selectType() {
-        // TODO implement here
+		this.currentFormType = this.FORM_INVALID;
+		while(this.currentFormType == this.FORM_INVALID){
+			this.printPrompt(this.MENU_PROMPT_FORM_CHOICE);
+			try{
+				switch(Integer.parseInt(this.in.getUserResponse()))
+				{
+					case FORM_SURVEY:
+					{
+						this.currentFormType = this.FORM_SURVEY;
+						this.currentForm = new Survey(in, out);
+						break;
+					}
+					case FORM_TEST:
+					{
+						this.currentFormType = this.FORM_TEST;
+						this.currentForm = new Test(in, out);
+						break;
+					}
+					case FORM_EXIT:
+					{
+						this.currentFormType = this.FORM_EXIT;
+						break;
+					}
+					default:
+					{
+						this.out.promptUser("Number does not correspond to any option");
+					}
+				}
+			}catch(NumberFormatException e){
+				this.out.promptUser("Invalid input must be a number corresponding to an option");
+			}
+		}		
         
     }
+	
+	private void formMenu(){
+		boolean exit = false;
+		do{
+			this.printPrompt(this.MENU_PROMPT_FORM);
+			try{
+				switch(Integer.parseInt(this.in.getUserResponse()))
+				{
+					case Survey.MENU_OPTION_CREATE:
+						{
+							this.currentForm.createNew(in, out);
+							break;
+						}
+					case Survey.MENU_OPTION_DISPLAY:
+						{
+							this.currentForm.display();
+							break;
+						}
+					case Survey.MENU_OPTION_LOAD:
+						{
+							this.currentForm = this.currentForm.loadFromFile(in, out);
+							break;
+						}
+					case Survey.MENU_OPTION_SAVE:
+						{
+							if(this.currentForm != null){
+								this.currentForm.saveToFile();
+							}else{
+								out.promptUser("Cannot save an empty form");
+							}
+							break;
+						}
+					case Survey.MENU_OPTION_QUIT:
+						{
+							exit = true;
+							break;
+						}
+					default:
+					{
+						this.out.promptUser("Number does not correspond to any option");
+					}
+				}
+			}catch(NumberFormatException e){
+				this.out.promptUser("Invalid input must be a number corresponding to an option");
+			}
+		}while(!exit);
+					
+	}
+
+	private void printPrompt(int menuPrompt){
+		switch( menuPrompt )
+		{
+			case MENU_PROMPT_FORM_CHOICE :
+			{
+				String prompt = "Please enter the number corresponding to your choice\n" + 
+								"1) Survey\n" +
+							    "2) Test\n" + 
+								"3) Quit\n";
+				this.out.promptUser(prompt);
+				break;
+			}
+			case MENU_PROMPT_FORM:
+			{
+				String prompt = currentForm.getMenuPrompt();
+				this.out.promptUser(prompt);
+				break;
+			}
+			default:{break;}
+		}
+	}
 
 
 	public static void main(String[] args){
-		Input in = new ConsoleInput();
-		Output out = new ConsoleOutput();
-		out.promptUser("Enter your name");
-		out.promptUser("Hello " + in.getUserResponse());
-		
+		Driver driver = new Driver(new ConsoleOutput(), new ConsoleInput());
+		driver.run();
 	}
 
 }

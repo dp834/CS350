@@ -6,36 +6,21 @@ import java.util.*;
  */
 public class Survey {
 
-    /**
-     * Default constructor
-     */
-    public Survey() {
-    }
+	public static final int MENU_OPTION_INVALID = 0;
+	public static final int MENU_OPTION_CREATE  = 1;
+	public static final int MENU_OPTION_DISPLAY = 2;
+	public static final int MENU_OPTION_LOAD    = 3;
+	public static final int MENU_OPTION_SAVE    = 4;
+	public static final int MENU_OPTION_QUIT    = 5;
 
-    /**
-     * 
-     */
+
     private static long serialVersionUID;
-
-    /**
-     * 
-     */
     protected String name;
-
-    /**
-     * 
-     */
     protected ArrayList<Question> questions;
+    protected Input in;
+    protected Output out;
 
-    /**
-     * 
-     */
-    protected Input input;
 
-    /**
-     * 
-     */
-    protected Output output;
 
 
 
@@ -46,16 +31,18 @@ public class Survey {
      * @param input 
      * @param output
      */
-    public void Survey(Input input, Output output) {
-        // TODO implement here
+    public Survey(Input input, Output output) {
+		this.in  = input;
+		this.out = output;
     }
 
     /**
      * @return
      */
-    public void createNew() {
+    public static Survey createNew(Input in, Output out) {
         // TODO implement here
-        
+       	out.promptUser("Create New"); 
+		return null;
     }
 
     /**
@@ -63,7 +50,7 @@ public class Survey {
      */
     public void display() {
         // TODO implement here
-        
+       	out.promptUser("Display"); 
     }
 
     /**
@@ -74,22 +61,8 @@ public class Survey {
         
     }
 
-    /**
-     * @return
-     */
     public void saveToFile() {
-        // TODO implement here
-        
-    }
-
-    /**
-     * @param input 
-     * @param output 
-     * @return
-     */
-    public static Survey loadFromFile(Input input, Output output) {
-        // TODO implement here
-	return null;        
+		out.promptUser("Save to File");
     }
 
     /**
@@ -124,4 +97,24 @@ public class Survey {
         
     }
 
+    /**
+     * @param input 
+     * @param output 
+     * @return
+     */
+    public static Survey loadFromFile(Input in, Output out) {
+		out.promptUser("Load from File");
+		return null;
+    }
+
+	public static String getMenuPrompt(){
+		String prompt = "Please enter the number corresponding to your choice\n" + 
+			"Survey Menu\n" +
+			"1) Create new Survey\n" +
+			"2) Display a Survey\n" +
+			"3) Load a Survey\n" +
+			"4) Save a Survey\n" +
+			"5) Quit\n";
+		return prompt;
+	}
 }

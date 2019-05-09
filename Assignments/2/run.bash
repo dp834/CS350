@@ -1,6 +1,3 @@
 #! /bin/bash
 
-make
-
-cd bin
-java Driver
+make && cd bin && java Driver
