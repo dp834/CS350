@@ -28,13 +28,6 @@ public class Test extends Survey {
 		test.getQuestionsFromUser();
 		return test;
 	}
-    /**
-     * @return
-     */
-    /**public void display() {
-        // TODO implement here
-        
-    }*/
 
     /**
      * @return

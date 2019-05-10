@@ -28,22 +28,18 @@ public abstract class Question implements Serializable{
     }
 
 	protected void getPrompt(){
-		this.out.promptUser("Enter the prompt for the question");
+		this.out.promptUser("Enter the prompt for your " + this.getQuestionType() + " question");
 		this.prompt = this.in.getUserResponse();	
 	}
 
 	abstract protected String getQuestionType();
 
 	public void addAnswer(){
+		this.out.promptUser("Enter the correct Answer");
+		this.correctAnswer = this.in.getUserResponse();
 	}
 
-    /**
-     * @return
-     */
-    public void display() {
-        // TODO implement here
-        
-    }
+    abstract public void display(); 
 
     /**
      * @return

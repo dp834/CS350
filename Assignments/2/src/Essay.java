@@ -7,11 +7,6 @@ import java.util.*;
 public class Essay extends Question {
 
 	private static final long serialVersionUID = 4843303662256111181L;
-    protected String prompt;
-    protected String correctAnswer;
-    protected ResponseCorrectAnswer responses;
-    protected Input input;
-    protected Output output;
 
     public Essay(Input in, Output out) {
 		super(in, out);

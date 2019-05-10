@@ -7,12 +7,6 @@ import java.util.*;
 public class Ranking extends Matching {
 
 	private static final long serialVersionUID = -8821892320996028489L;
-	protected String prompt;
-    protected String correctAnswer;
-    protected ResponseCorrectAnswer responses;
-    protected String choices[][];
-    protected Input in;
-    protected Output out;
 
     public Ranking(Input in, Output out) {
 		super(in,out);

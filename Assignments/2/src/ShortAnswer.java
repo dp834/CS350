@@ -7,12 +7,7 @@ import java.util.*;
 public class ShortAnswer extends Essay {
 
 	private static final long serialVersionUID = -1063552229976242837L;
-    protected String prompt;
-    protected String correctAnswer;
-    protected ResponseCorrectAnswer responses;
     protected int characterLimit;
-    protected Input in;
-    protected Output out;
 
     public ShortAnswer(Input in, Output out) {
 		super(in,out);

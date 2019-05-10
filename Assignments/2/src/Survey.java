@@ -144,7 +144,12 @@ public class Survey implements Serializable{
 	 * @return
 	 */
 	public void display() {
-		out.promptUser("Display"); 
+		int i = 1;
+		this.out.promptUser(this.getFormType() + ": " + this.name);
+		for(Question q : this.questions){
+			this.out.promptUser(i++ + ")");
+			q.display();
+		}
 	}
 
 	/**
@@ -152,6 +157,7 @@ public class Survey implements Serializable{
 	 * Nothing special in survey
 	 */
 	public void addQuestion(Question question) {
+		this.questions.add(question);
 		return;	
 	}
 

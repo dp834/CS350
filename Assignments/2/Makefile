@@ -24,7 +24,7 @@ SRC = $(shell find ./src -type f)
 # Création des fichiers .class correspondant
 OBJ = $(SRC:.java=.class)
 
-JC = javac
+JC = /usr/lib/jvm/java-8-openjdk-amd64/bin/javac #javac
 
 JAVAC_COMPILE = $(JC) $(J_DIRECTORY_SOURCE) $(J_DIRECTORY_CLASS)
 
