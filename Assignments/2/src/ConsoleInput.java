@@ -19,7 +19,7 @@ public class ConsoleInput implements Input {
      * @return
      */
     public String getUserResponse() {
-        return scanner.next(); 
+        return scanner.nextLine(); 
     }
 
 }

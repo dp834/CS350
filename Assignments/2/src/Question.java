@@ -1,58 +1,41 @@
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public abstract class Question {
+public abstract class Question implements Serializable{
 
-    /**
-     * Default constructor
-     */
-    public Question() {
-    }
-
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
-    protected String prompt;
-
-    /**
-     * 
-     */
+	private static final long serialVersionUID = -7734027287665266720L;
+	protected String prompt;
     protected String correctAnswer;
-
-    /**
-     * 
-     */
     protected ResponseCorrectAnswer responses;
+    protected transient Input in;
+    protected transient Output out;
 
-    /**
-     * 
-     */
-    protected Input input;
-
-    /**
-     * 
-     */
-    protected Output output;
-
-
-
-
+    public Question(Input in, Output out) {
+    	this.in=in;
+    	this.out=out;
+		this.createQuestion();
+    }
 
     /**
      * @return
      */
     public void createQuestion() {
-        // TODO implement here
-        
+       this.getPrompt(); 
     }
+
+	protected void getPrompt(){
+		this.out.promptUser("Enter the prompt for the question");
+		this.prompt = this.in.getUserResponse();	
+	}
+
+	abstract protected String getQuestionType();
+
+	public void addAnswer(){
+	}
 
     /**
      * @return
@@ -99,8 +82,7 @@ public abstract class Question {
      * @return
      */
     public void setInput(Input input) {
-        // TODO implement here
-        
+       this.in = input; 
     }
 
     /**
@@ -108,8 +90,7 @@ public abstract class Question {
      * @return
      */
     public void setOutput(Output output) {
-        // TODO implement here
-        
+       this.out = output; 
     }
 
 }

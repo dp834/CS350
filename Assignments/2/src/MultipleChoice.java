@@ -6,62 +6,25 @@ import java.util.*;
  */
 public class MultipleChoice extends Question {
 
-    /**
-     * Default constructor
-     */
-    public MultipleChoice() {
+	private static final long serialVersionUID = -7962475311863650987L;
+	protected String[] choices;
+
+    public MultipleChoice(Input in, Output out) {
+		super(in, out);
     }
 
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
-    protected String prompt;
-
-    /**
-     * 
-     */
-    protected String correctAnswer;
-
-    /**
-     * 
-     */
-    protected ResponseCorrectAnswer responses;
-
-    /**
-     * 
-     */
-    protected String[] choices;
-
-    /**
-     * 
-     */
-    protected Input input;
-
-    /**
-     * 
-     */
-    protected Output output;
-
-
-    /**
-     * 
-     */
-    public void MultipleChoice() {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
     public void createQuestion() {
-        // TODO implement here
-        
+    	this.getPrompt();
+		this.getOptions();  
     }
+
+	protected String getQuestionType(){
+		return "Multiple Choice";
+	}
+
+	public void getOptions(){
+		
+	}
 
     /**
      * @return

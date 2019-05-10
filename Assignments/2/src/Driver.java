@@ -35,7 +35,7 @@ public class Driver {
 
 	public void run(){
 		this.selectType();
-		while(this.currentFormType != this.FORM_EXIT){
+		while(this.currentFormType != Driver.FORM_EXIT){
 			this.formMenu();	
 			this.selectType();
 		}
@@ -47,27 +47,26 @@ public class Driver {
      * @return
      */
     private void selectType() {
-		this.currentFormType = this.FORM_INVALID;
-		while(this.currentFormType == this.FORM_INVALID){
-			this.printPrompt(this.MENU_PROMPT_FORM_CHOICE);
+		do{	
+			this.printPrompt(Driver.MENU_PROMPT_FORM_CHOICE);
 			try{
 				switch(Integer.parseInt(this.in.getUserResponse()))
 				{
 					case FORM_SURVEY:
 					{
-						this.currentFormType = this.FORM_SURVEY;
+						this.currentFormType = Driver.FORM_SURVEY;
 						this.currentForm = new Survey(in, out);
 						break;
 					}
 					case FORM_TEST:
 					{
-						this.currentFormType = this.FORM_TEST;
+						this.currentFormType = Driver.FORM_TEST;
 						this.currentForm = new Test(in, out);
 						break;
 					}
 					case FORM_EXIT:
 					{
-						this.currentFormType = this.FORM_EXIT;
+						this.currentFormType = Driver.FORM_EXIT;
 						break;
 					}
 					default:
@@ -78,20 +77,20 @@ public class Driver {
 			}catch(NumberFormatException e){
 				this.out.promptUser("Invalid input must be a number corresponding to an option");
 			}
-		}		
+		}while(this.currentFormType == Driver.FORM_INVALID);		
         
     }
 	
 	private void formMenu(){
 		boolean exit = false;
 		do{
-			this.printPrompt(this.MENU_PROMPT_FORM);
+			this.printPrompt(Driver.MENU_PROMPT_FORM);
 			try{
 				switch(Integer.parseInt(this.in.getUserResponse()))
 				{
 					case Survey.MENU_OPTION_CREATE:
 						{
-							this.currentForm.createNew(in, out);
+							this.currentForm = this.currentForm.createNew();
 							break;
 						}
 					case Survey.MENU_OPTION_DISPLAY:
@@ -101,7 +100,7 @@ public class Driver {
 						}
 					case Survey.MENU_OPTION_LOAD:
 						{
-							this.currentForm = this.currentForm.loadFromFile(in, out);
+							this.currentForm = this.currentForm.loadFromFile();
 							break;
 						}
 					case Survey.MENU_OPTION_SAVE:
@@ -144,7 +143,7 @@ public class Driver {
 			}
 			case MENU_PROMPT_FORM:
 			{
-				String prompt = currentForm.getMenuPrompt();
+				String prompt = this.currentForm.getMenuPrompt();
 				this.out.promptUser(prompt);
 				break;
 			}

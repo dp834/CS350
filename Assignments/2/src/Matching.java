@@ -6,62 +6,25 @@ import java.util.*;
  */
 public class Matching extends Question {
 
-    /**
-     * Default constructor
-     */
-    public Matching() {
-    }
-
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
-    protected String prompt;
-
-    /**
-     * 
-     */
-    protected String correctAnswer;
-
-    /**
-     * 
-     */
-    protected ResponseCorrectAnswer responses;
-
-    /**
-     * 
-     */
+	private static final long serialVersionUID = 381684151351862186L;
     protected String choices[][];
 
-    /**
-     * 
-     */
-    protected Input input;
-
-    /**
-     * 
-     */
-    protected Output output;
-
-
-    /**
-     * 
-     */
-    public void Matching() {
-        // TODO implement here
+    public Matching(Input in, Output out) {
+		super(in, out);
     }
 
-    /**
-     * @return
-     */
     public void createQuestion() {
-        // TODO implement here
-        
+		this.getPrompt();
+		this.getChoices();
     }
+	
+	public void getChoices(){
+
+	}
+
+	protected String getQuestionType(){
+		return "Matching";
+	}
 
     /**
      * @return

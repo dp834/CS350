@@ -6,62 +6,15 @@ import java.util.*;
  */
 public class TrueFalse extends MultipleChoice {
 
-    /**
-     * Default constructor
-     */
-    public TrueFalse() {
+	private static final long serialVersionUID = -5349186905736383941L;
+
+    public TrueFalse(Input in, Output out) {
+		super(in, out);
     }
 
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
-    protected String prompt;
-
-    /**
-     * 
-     */
-    protected String correctAnswer;
-
-    /**
-     * 
-     */
-    protected ResponseCorrectAnswer responses;
-
-    /**
-     * 
-     */
-    protected String[] choices;
-
-    /**
-     * 
-     */
-    protected Input input;
-
-    /**
-     * 
-     */
-    protected Output output;
-
-
-    /**
-     * 
-     */
-    public void TrueFalse() {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public void createQuestion() {
-        // TODO implement here
-        
-    }
+	protected String getQuestionType(){
+		return "True/False";
+	}
 
     /**
      * @return
@@ -100,24 +53,6 @@ public class TrueFalse extends MultipleChoice {
      */
     public ArrayList<Boolean> grade() {
 		return null;
-        // TODO implement here
-        
-    }
-
-    /**
-     * @param input 
-     * @return
-     */
-    public void setInput(Input input) {
-        // TODO implement here
-        
-    }
-
-    /**
-     * @param output 
-     * @return
-     */
-    public void setOutput(Output output) {
         // TODO implement here
         
     }

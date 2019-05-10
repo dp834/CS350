@@ -6,62 +6,21 @@ import java.util.*;
  */
 public class ShortAnswer extends Essay {
 
-    /**
-     * Default constructor
-     */
-    public ShortAnswer() {
-    }
-
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
+	private static final long serialVersionUID = -1063552229976242837L;
     protected String prompt;
-
-    /**
-     * 
-     */
     protected String correctAnswer;
-
-    /**
-     * 
-     */
     protected ResponseCorrectAnswer responses;
-
-    /**
-     * 
-     */
     protected int characterLimit;
+    protected Input in;
+    protected Output out;
 
-    /**
-     * 
-     */
-    protected Input input;
-
-    /**
-     * 
-     */
-    protected Output output;
-
-
-    /**
-     * 
-     */
-    public void ShortAnswer() {
-        // TODO implement here
+    public ShortAnswer(Input in, Output out) {
+		super(in,out);
     }
 
-    /**
-     * @return
-     */
-    public void createQuestion() {
-        // TODO implement here
-        
-    }
+	protected String getQuestionType(){
+		return "Short Answer";
+	}
 
     /**
      * @return

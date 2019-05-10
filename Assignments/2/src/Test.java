@@ -16,16 +16,18 @@ public class Test extends Survey {
 		super(input, output);
     }
 
+	@Override
+	protected String getFormType(){
+		return "Test";
+	}
 
-
-    /**
-     * @return
-     */
-	/*
-    public static Test createNew() {
-    }
-	*/
-
+	@Override
+	public Survey createNew() {
+		Test test = new Test(this.in, this.out);
+		test.getNameFromUser();
+		test.getQuestionsFromUser();
+		return test;
+	}
     /**
      * @return
      */
@@ -37,9 +39,8 @@ public class Test extends Survey {
     /**
      * @return
      */
-    public void addQuestion() {
-        // TODO implement here
-        
+    public void addQuestion(Question question) {
+       question.addAnswer(); 
     }
 
     /**
@@ -103,7 +104,7 @@ public class Test extends Survey {
         
     }
 
-	public static String getMenuPrompt(){
+	public String getMenuPrompt(){
 		String prompt = "Please enter the number corresponding to your choice\n" + 
 			"Test Menu\n" +
 			"1) Create new Test \n" +

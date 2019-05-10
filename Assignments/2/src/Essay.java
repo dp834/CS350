@@ -6,56 +6,15 @@ import java.util.*;
  */
 public class Essay extends Question {
 
-    /**
-     * Default constructor
-     */
-    public Essay() {
-    }
-
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
+	private static final long serialVersionUID = 4843303662256111181L;
     protected String prompt;
-
-    /**
-     * 
-     */
     protected String correctAnswer;
-
-    /**
-     * 
-     */
     protected ResponseCorrectAnswer responses;
-
-    /**
-     * 
-     */
     protected Input input;
-
-    /**
-     * 
-     */
     protected Output output;
 
-
-    /**
-     * 
-     */
-    public void Essay() {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public void createQuestion() {
-        // TODO implement here
-        
+    public Essay(Input in, Output out) {
+		super(in, out);
     }
 
     /**
@@ -65,6 +24,10 @@ public class Essay extends Question {
         // TODO implement here
         
     }
+
+	protected String getQuestionType(){
+		return "Essay";
+	}
 
     /**
      * @return

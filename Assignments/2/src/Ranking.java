@@ -6,62 +6,21 @@ import java.util.*;
  */
 public class Ranking extends Matching {
 
-    /**
-     * Default constructor
-     */
-    public Ranking() {
-    }
-
-    /**
-     * 
-     */
-    private static long serialVersionUID;
-
-    /**
-     * 
-     */
-    protected String prompt;
-
-    /**
-     * 
-     */
+	private static final long serialVersionUID = -8821892320996028489L;
+	protected String prompt;
     protected String correctAnswer;
-
-    /**
-     * 
-     */
     protected ResponseCorrectAnswer responses;
-
-    /**
-     * 
-     */
     protected String choices[][];
+    protected Input in;
+    protected Output out;
 
-    /**
-     * 
-     */
-    protected Input input;
-
-    /**
-     * 
-     */
-    protected Output output;
-
-
-    /**
-     * 
-     */
-    public void Ranking() {
-        // TODO implement here
+    public Ranking(Input in, Output out) {
+		super(in,out);
     }
 
-    /**
-     * @return
-     */
-    public void createQuestion() {
-        // TODO implement here
-        
-    }
+	protected String getQuestionType(){
+		return "Ranking";
+	}
 
     /**
      * @return
