@@ -1,5 +1,4 @@
 
-import java.util.*;
 
 /**
  * 
@@ -78,7 +77,7 @@ public class Driver {
 				this.out.promptUser("Invalid input must be a number corresponding to an option");
 			}
 		}while(this.currentFormType == Driver.FORM_INVALID);		
-        
+		this.out.promptUser("\n");
     }
 	
 	private void formMenu(){
@@ -90,21 +89,25 @@ public class Driver {
 				{
 					case Survey.MENU_OPTION_CREATE:
 						{
+							this.out.promptUser("\n");
 							this.currentForm = this.currentForm.createNew();
 							break;
 						}
 					case Survey.MENU_OPTION_DISPLAY:
 						{
+							this.out.promptUser("\n");
 							this.currentForm.display();
 							break;
 						}
 					case Survey.MENU_OPTION_LOAD:
 						{
+							this.out.promptUser("\n");
 							this.currentForm = this.currentForm.loadFromFile();
 							break;
 						}
 					case Survey.MENU_OPTION_SAVE:
 						{
+							this.out.promptUser("\n");
 							if(this.currentForm != null){
 								this.currentForm.saveToFile();
 							}else{

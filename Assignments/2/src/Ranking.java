@@ -16,14 +16,27 @@ public class Ranking extends Matching {
 		return "Ranking";
 	}
 
-    /**
-     * @return
-     */
-    public void display() {
-        // TODO implement here
-        
-    }
-
+	public void getChoices(){
+		while(numberOfChoices < 2){
+			this.out.promptUser("Enter the number of choices for your Matching question.");
+			try{
+				numberOfChoices = Integer.parseInt(this.in.getUserResponse());
+				if( numberOfChoices < 2){
+					this.out.promptUser("Must have at least 2 options");
+				}
+			}catch(NumberFormatException e){
+				this.out.promptUser("Must ender a number");
+			}
+		}
+		this.choices = new String[1][numberOfChoices];
+		for(int j = 0; j < this.choices.length; j++){
+			for(int i = 0; i < numberOfChoices; i++){
+				this.out.promptUser("Enter choice #" + (i + 1));
+				this.choices[j][i] = this.in.getUserResponse();
+			}
+		}
+	}
+	
     /**
      * @return
      */

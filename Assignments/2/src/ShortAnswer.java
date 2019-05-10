@@ -17,13 +17,34 @@ public class ShortAnswer extends Essay {
 		return "Short Answer";
 	}
 
+
+	public void createQuestion(){
+		super.createQuestion();
+		this.getCharacterLimit();
+	}
+
     /**
      * @return
      */
     public void display() {
-        // TODO implement here
-        
+        this.out.promptUser(this.prompt);
+		this.out.promptUser("Character limit: " + this.characterLimit);
+		if(this.correctAnswer != null){
+			this.out.promptUser("The correct choice is: " + this.correctAnswer);
+		}
     }
+
+	protected void getCharacterLimit(){
+		this.characterLimit = -1;
+		while(this.characterLimit < 1){
+			this.out.promptUser("Enter a character limit, minimum 1");
+			try{
+				this.characterLimit = Integer.parseInt(this.in.getUserResponse());
+			}catch(NumberFormatException e){
+				this.out.promptUser("Please enter a number");
+			}
+		}
+	}
 
     /**
      * @return

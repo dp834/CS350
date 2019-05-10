@@ -1,6 +1,9 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class Survey implements Serializable{
 
 	protected static final int PROMPT_QUESTION = 1;
 
-	protected final static String FOLDER_PATH = "../resources/Forms/";
+	protected final static String FOLDER_PATH = "resources/Forms/";
 
 	protected String name;
 	protected ArrayList<Question> questions;
@@ -87,6 +90,7 @@ public class Survey implements Serializable{
 			this.printPrompt(PROMPT_QUESTION);			
 			try{
 				userResponse = Integer.parseInt(this.in.getUserResponse());
+				this.out.promptUser("\n");
 				switch(userResponse)
 				{
 					case QUESTION_OPTION_T_F:
@@ -149,6 +153,7 @@ public class Survey implements Serializable{
 		for(Question q : this.questions){
 			this.out.promptUser(i++ + ")");
 			q.display();
+			this.out.promptUser("\n");
 		}
 	}
 
@@ -218,16 +223,55 @@ public class Survey implements Serializable{
 
 	}
 
-	/**
-	 * @param input 
-	 * @param output 
+	/** 
 	 * @return
 	 */
 	public Survey loadFromFile() {
-		out.promptUser("Load from File");
-		return null;
+		@SuppressWarnings("static-access")
+		File folder = new File(this.FOLDER_PATH);
+		File files[] = folder.listFiles();
+		Survey survey = this;
+		if(files == null) {
+			this.out.promptUser("Error getting saved " + this.getFormType());
+			return survey;
+		}
+
+		this.out.promptUser("Please enter the name of the " + this.getFormType() + " you would like to load");
+		for(File file: files) {
+			String f = file.getName();
+			if(f.endsWith("." + this.getFormType())) {
+				this.out.promptUser(f);
+			}
+		}
+		String response = this.in.getUserResponse();
+		
+		try {
+			@SuppressWarnings("static-access")
+			FileInputStream streamIn = new FileInputStream(this.FOLDER_PATH + response);
+			ObjectInputStream objStreamIn = new ObjectInputStream(streamIn);
+			survey = (Survey) objStreamIn.readObject();
+			objStreamIn.close();
+		}catch(FileNotFoundException e) {
+			this.out.promptUser("Could not find file, check spelling?");
+		}catch(IOException e) {
+			this.out.promptUser("Error loading file, please try again");
+		}catch(ClassNotFoundException e) {
+			this.out.promptUser("Error loading file, please try again");
+		}
+		
+		survey.setIO(this.in, this.out);
+		for(Question q : survey.questions){
+			q.setIO(survey.in, survey.out);
+		}
+
+		return survey;
 	}
 
+	public void setIO(Input in, Output out) {
+		this.in = in;
+		this.out = out;
+	}
+	
 	public String getMenuPrompt(){
 		String prompt = "Please enter the number corresponding to your choice\n" + 
 			"Survey Menu\n" +

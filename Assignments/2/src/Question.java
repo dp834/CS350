@@ -73,20 +73,9 @@ public abstract class Question implements Serializable{
     	return null;    
     }
 
-    /**
-     * @param input 
-     * @return
-     */
-    public void setInput(Input input) {
-       this.in = input; 
-    }
-
-    /**
-     * @param output 
-     * @return
-     */
-    public void setOutput(Output output) {
-       this.out = output; 
+    public void setIO(Input in, Output out) {
+    	this.in = in;
+    	this.out = out;
     }
 
 }

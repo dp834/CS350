@@ -12,12 +12,8 @@ public class Essay extends Question {
 		super(in, out);
     }
 
-    /**
-     * @return
-     */
     public void display() {
-        // TODO implement here
-        
+       this.out.promptUser(this.prompt); 
     }
 
 	protected String getQuestionType(){

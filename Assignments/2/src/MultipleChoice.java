@@ -54,6 +54,9 @@ public class MultipleChoice extends Question {
     	for( String opt : this.choices ){
 			this.out.promptUser(choice++ + ") " + opt);   
 		} 
+		if(this.correctAnswer != null ){
+			this.out.promptUser("The correct choice is: " + this.correctAnswer);
+		}
     }
 
     /**
