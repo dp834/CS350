@@ -8,18 +8,19 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * 
- */
 public class Survey implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	public static final int MENU_OPTION_INVALID = 0;
-	public static final int MENU_OPTION_CREATE  = 1;
-	public static final int MENU_OPTION_DISPLAY = 2;
-	public static final int MENU_OPTION_LOAD    = 3;
-	public static final int MENU_OPTION_SAVE    = 4;
-	public static final int MENU_OPTION_QUIT    = 5;
+
+	protected static final int MENU_OPTION_INVALID = 0;
+	protected static final int MENU_OPTION_CREATE  = 1;
+	protected static final int MENU_OPTION_DISPLAY = 2;
+	protected static final int MENU_OPTION_LOAD    = 3;
+	protected static final int MENU_OPTION_SAVE    = 4;
+	protected static final int MENU_OPTION_MODIFY  = 5;
+	protected static final int MENU_OPTION_TAKE    = 6;
+	protected static final int MENU_OPTION_TABULATE= 7;
+	protected static final int MENU_OPTION_QUIT    = 8;
 
 	protected static final int QUESTION_OPTION_INVALID   = 0;
 	protected static final int QUESTION_OPTION_T_F       = 1;
@@ -40,19 +41,12 @@ public class Survey implements Serializable{
 	protected transient Output out;
 
 
-	/**
-	 * @param input 
-	 * @param output
-	 */
 	public Survey(Input input, Output output) {
 		this.in  = input;
 		this.out = output;
 		this.questions = new ArrayList<Question>();
 	}
 
-	/**
-	 * @return
-	 */
 	public Survey createNew() {
 		Survey survey = new Survey(this.in, this.out);
 		survey.getNameFromUser();
@@ -82,7 +76,6 @@ public class Survey implements Serializable{
 			default:{break;}
 		}
 	}
-
 
 	protected void getQuestionsFromUser(){
 		int userResponse = Survey.QUESTION_OPTION_INVALID;
@@ -144,9 +137,6 @@ public class Survey implements Serializable{
 		return "Survey";
 	}
 
-	/**
-	 * @return
-	 */
 	public void display() {
 		int i = 1;
 		this.out.promptUser(this.getFormType() + ": " + this.name);
@@ -191,41 +181,18 @@ public class Survey implements Serializable{
 
 	}
 
-	/**
-	 * @return
-	 */
 	public void modify() {
-		// TODO implement here
 
 	}
 
-	/**
-	 * @return
-	 */
 	public void take() {
-		// TODO implement here
 
 	}
 
-	/**
-	 * @return
-	 */
 	public void tabulate() {
-		// TODO implement here
 
 	}
 
-	/**
-	 * @return
-	 */
-	public void menu() {
-		// TODO implement here
-
-	}
-
-	/** 
-	 * @return
-	 */
 	public Survey loadFromFile() {
 		@SuppressWarnings("static-access")
 		File folder = new File(this.FOLDER_PATH);
@@ -279,7 +246,59 @@ public class Survey implements Serializable{
 			"2) Display a Survey\n" +
 			"3) Load a Survey\n" +
 			"4) Save a Survey\n" +
-			"5) Quit\n";
+			"5) Modify an existing Survey\n" +
+			"6) Take a Survey\n" +
+			"7) Tabulate a Survey\n" +
+			"8) Quit\n";
 		return prompt;
+	}
+	public Survey menuHandler(int choice){
+		switch(choice)
+		{
+			case MENU_OPTION_CREATE:
+				{
+					return this.createNew();
+				}
+			case MENU_OPTION_DISPLAY:
+				{
+					this.display();
+					break;
+				}
+			case MENU_OPTION_LOAD:
+				{
+					return this.loadFromFile();
+				}
+			case MENU_OPTION_SAVE:
+				{
+					this.saveToFile();
+					out.promptUser("Cannot save an empty form");
+					break;
+				}
+			case MENU_OPTION_MODIFY:
+				{
+					this.modify();
+					break;
+				}
+			case MENU_OPTION_TAKE:
+				{
+					this.take();
+					break;
+				}
+			case MENU_OPTION_TABULATE:
+				{
+					this.tabulate();
+					break;
+				}
+			case MENU_OPTION_QUIT:
+				{
+					return null;
+				}
+			default:
+				{
+					this.out.promptUser("Invalid input must be a number corresponding to an option");
+					break;
+				}
+		}
+		return this;
 	}
 }

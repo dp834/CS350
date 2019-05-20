@@ -1,8 +1,3 @@
-
-
-/**
- * 
- */
 public class Driver {
 
 	public static final int FORM_INVALID = 0;
@@ -21,9 +16,6 @@ public class Driver {
     private Survey currentForm;
     private int currentFormType;
 
-    /**
-     * Default constructor
-     */
     public Driver(Output out, Input in) {
 		this.out = out;
 		this.in = in;
@@ -42,9 +34,6 @@ public class Driver {
 	}
 
 
-    /**
-     * @return
-     */
     private void selectType() {
 		do{	
 			this.printPrompt(Driver.MENU_PROMPT_FORM_CHOICE);
@@ -81,54 +70,15 @@ public class Driver {
     }
 	
 	private void formMenu(){
-		boolean exit = false;
 		do{
 			this.printPrompt(Driver.MENU_PROMPT_FORM);
 			try{
-				switch(Integer.parseInt(this.in.getUserResponse()))
-				{
-					case Survey.MENU_OPTION_CREATE:
-						{
-							this.out.promptUser("\n");
-							this.currentForm = this.currentForm.createNew();
-							break;
-						}
-					case Survey.MENU_OPTION_DISPLAY:
-						{
-							this.out.promptUser("\n");
-							this.currentForm.display();
-							break;
-						}
-					case Survey.MENU_OPTION_LOAD:
-						{
-							this.out.promptUser("\n");
-							this.currentForm = this.currentForm.loadFromFile();
-							break;
-						}
-					case Survey.MENU_OPTION_SAVE:
-						{
-							this.out.promptUser("\n");
-							if(this.currentForm != null){
-								this.currentForm.saveToFile();
-							}else{
-								out.promptUser("Cannot save an empty form");
-							}
-							break;
-						}
-					case Survey.MENU_OPTION_QUIT:
-						{
-							exit = true;
-							break;
-						}
-					default:
-					{
-						this.out.promptUser("Number does not correspond to any option");
-					}
-				}
+				this.out.promptUser("\n");
+				this.currentForm = this.currentForm.menuHandler(Integer.parseInt(this.in.getUserResponse()));
 			}catch(NumberFormatException e){
 				this.out.promptUser("Invalid input must be a number corresponding to an option");
 			}
-		}while(!exit);
+		}while(this.currentForm != null);
 					
 	}
 

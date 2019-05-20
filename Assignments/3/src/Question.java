@@ -1,10 +1,6 @@
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
 
-/**
- * 
- */
 public abstract class Question implements Serializable{
 
 	private static final long serialVersionUID = -7734027287665266720L;
@@ -20,9 +16,6 @@ public abstract class Question implements Serializable{
 		this.createQuestion();
     }
 
-    /**
-     * @return
-     */
     public void createQuestion() {
        this.getPrompt(); 
     }
@@ -41,27 +34,15 @@ public abstract class Question implements Serializable{
 
     abstract public void display(); 
 
-    /**
-     * @return
-     */
     public void modify() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void take() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void tabulate() {
-        // TODO implement here
         
     }
 
@@ -69,7 +50,6 @@ public abstract class Question implements Serializable{
      * @return
      */
     public ArrayList<Boolean> grade() {
-        // TODO implement here
     	return null;    
     }
 

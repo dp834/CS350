@@ -4,20 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-/**
- * 
- */
 public class Test extends Survey {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5120122415979633417L;
+	private static final long serialVersionUID = 5120122415979633417L;	
 
-    /**
-     * @param input 
-     * @param output
-     */
+	protected static final int MENU_OPTION_GRADE = Survey.MENU_OPTION_QUIT;
+	protected static final int MENU_OPTION_QUIT  = MENU_OPTION_GRADE + 1;
+
     public Test(Input input, Output output) {
 		super(input, output);
     }
@@ -35,70 +28,27 @@ public class Test extends Survey {
 		return test;
 	}
 
-    /**
-     * @return
-     */
     public void addQuestion(Question question) {
     	question.addAnswer(); 
     	questions.add(question);
     }
 
-    /**
-     * @return
-     */
-/*    public void saveToFile() {
-        // TODO implement here
-        
-    }
-*/
-    /**
-     * @param input 
-     * @param output 
-     * @return
-     */
-/*
-    public static Test loadFromFile(Input input, Output output) {
-		return null;
-        // TODO implement here
-        
-    }
-	*/
-
-    /**
-     * @return
-     */
     public void modify() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void take() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void tabulate() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void grade() {
-        // TODO implement here
         
     }
 
-	/** 
-	 * @return
-	 */
 	public Test loadFromFile() {
 		@SuppressWarnings("static-access")
 		File folder = new File(this.FOLDER_PATH);
@@ -139,6 +89,26 @@ public class Test extends Survey {
 
 		return test;
 	}
+
+	public Test menuHandler(int choice){
+		switch(choice)
+		{
+			case MENU_OPTION_GRADE:
+			{
+				this.grade();
+				break;
+			}
+			case MENU_OPTION_QUIT:
+			{
+				return null;
+			}
+			default:
+			{		
+				return (Test) super.menuHandler(choice);
+			}
+		}
+		return this;
+	}
     
 	public String getMenuPrompt(){
 		String prompt = "Please enter the number corresponding to your choice\n" + 
@@ -147,7 +117,11 @@ public class Test extends Survey {
 			"2) Display a Test \n" +
 			"3) Load a Test \n" +
 			"4) Save a Test \n" +
-			"5) Quit\n";
+			"5) Modify an existing Test\n" +
+			"6) Take a Test\n" +
+			"7) Tabulate a Test\n" +
+			"8) Grade a Test\n" +
+			"9) Quit\n";
 		return prompt;
 	}
 

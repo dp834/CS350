@@ -1,9 +1,5 @@
+import java.util.ArrayList;
 
-import java.util.*;
-
-/**
- * 
- */
 public class Matching extends Question {
 
 	private static final long serialVersionUID = 381684151351862186L;
@@ -45,9 +41,6 @@ public class Matching extends Question {
 		return "Matching";
 	}
 
-    /**
-     * @return
-     */
     public void display() {
 		this.out.promptUser(this.prompt);	
 		char choices[] = {'a', '1'};
@@ -63,55 +56,20 @@ public class Matching extends Question {
 		}
     }
 
-    /**
-     * @return
-     */
     public void modify() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void take() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public void tabulate() {
-        // TODO implement here
         
     }
 
-    /**
-     * @return
-     */
     public ArrayList<Boolean> grade() {
 		return null;
-        // TODO implement here
-        
-    }
-
-    /**
-     * @param input 
-     * @return
-     */
-    public void setInput(Input input) {
-        // TODO implement here
-        
-    }
-
-    /**
-     * @param output 
-     * @return
-     */
-    public void setOutput(Output output) {
-        // TODO implement here
-        
     }
 
 }
