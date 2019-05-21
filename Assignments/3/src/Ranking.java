@@ -33,10 +33,6 @@ public class Ranking extends Matching {
 		}
 	}
 	
-    public void modify() {
-        
-    }
-
     public void take() {
         
     }

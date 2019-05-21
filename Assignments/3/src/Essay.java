@@ -16,7 +16,7 @@ public class Essay extends Question {
 		return "Essay";
 	}
 
-    public void modify() {
+    public void _modify() {
         
     }
 

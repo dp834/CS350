@@ -45,6 +45,7 @@ public class Survey implements Serializable{
 		this.in  = input;
 		this.out = output;
 		this.questions = new ArrayList<Question>();
+		this.name = "";
 	}
 
 	public Survey createNew() {
@@ -157,7 +158,7 @@ public class Survey implements Serializable{
 	}
 
 	public void saveToFile() {
-		if(this.name.compareTo("") == 0 || this.name == null){
+		if(this.name == null || this.name.compareTo("") == 0 ){
 			this.out.promptUser("Cannot save " + this.getFormType() + " with no name");
 			return;
 		}
@@ -182,7 +183,25 @@ public class Survey implements Serializable{
 	}
 
 	public void modify() {
+		if(this.name == null || this.name.compareTo("") == 0){
+			this.out.promptUser("Please load a " + this.getFormType() + " to modify\n\n");
+			return;
+		}
+		this.display();
+		this.out.promptUser("Which question would you like to modify? (Enter the number)");
+		int userResponse = -1;
+		while(userResponse < 1 || userResponse > this.questions.size()){
+			try{
+				userResponse = Integer.parseInt(this.in.getUserResponse());
+			}catch(NumberFormatException e){
+				this.out.promptUser("Invalid input must be a number corresponding to an option");
+			}
+		}
+		this._modify(userResponse-1);
+	}
 
+	protected void _modify(int questionOption){
+		this.questions.get(questionOption).modify();
 	}
 
 	public void take() {
@@ -197,10 +216,9 @@ public class Survey implements Serializable{
 		@SuppressWarnings("static-access")
 		File folder = new File(this.FOLDER_PATH);
 		File files[] = folder.listFiles();
-		Survey survey = this;
 		if(files == null) {
 			this.out.promptUser("Error getting saved " + this.getFormType());
-			return survey;
+			return this;
 		}
 
 		this.out.promptUser("Please enter the name of the " + this.getFormType() + " you would like to load");
@@ -210,11 +228,15 @@ public class Survey implements Serializable{
 				this.out.promptUser(f);
 			}
 		}
-		String response = this.in.getUserResponse();
+		return this._loadFromFile(this.in.getUserResponse());
 		
+	}
+
+	private Survey _loadFromFile(String fileName){
+		Survey survey = this;
 		try {
 			@SuppressWarnings("static-access")
-			FileInputStream streamIn = new FileInputStream(this.FOLDER_PATH + response);
+			FileInputStream streamIn = new FileInputStream(this.FOLDER_PATH + fileName);
 			ObjectInputStream objStreamIn = new ObjectInputStream(streamIn);
 			survey = (Survey) objStreamIn.readObject();
 			objStreamIn.close();

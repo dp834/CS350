@@ -39,9 +39,15 @@ public class ShortAnswer extends Essay {
 		}
 	}
 
-    public void modify() {
-        
+    public void _modify() {
+    	if(this.getYesNo("Do you wish to change the character limit?")){
+			this._modifyCharacterLimit();
+		}
     }
+
+	protected void _modifyCharacterLimit(){
+		this.getCharacterLimit();
+	}
 
     public void take() {
         

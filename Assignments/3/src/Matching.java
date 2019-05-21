@@ -56,8 +56,34 @@ public class Matching extends Question {
 		}
     }
 
-    public void modify() {
-        
+    public void _modifyChoices() {
+    	String temp = this.correctAnswer;
+		this.correctAnswer = null;
+		this.display();
+		this.correctAnswer = temp;
+		int column = 0, choice = 0;	
+		boolean flag = true;
+		do{
+			this.out.promptUser("Enter the character corresponding to the choice you would like to modify");	
+			String userResponse = this.in.getUserResponse();
+			if(userResponse.length() == 1){
+				if(userResponse.charAt(0) - 'a' >= 0 && userResponse.charAt(0) - 'a' < this.choices[0].length){
+					column = 0;
+					choice = userResponse.charAt(0) - 'a';
+					flag = false;
+					break;
+				}
+			}
+			try{
+				choice = Integer.parseInt(userResponse) - 1;
+				column = 1;
+				flag = false;
+				break;
+			}catch(NumberFormatException e){}
+		}while(flag);
+		
+		this.out.promptUser("Enter the new option");
+		this.choices[column][choice] = this.in.getUserResponse();
     }
 
     public void take() {

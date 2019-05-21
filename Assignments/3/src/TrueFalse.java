@@ -19,9 +19,9 @@ public class TrueFalse extends MultipleChoice {
 		this.choices[1] = "False";		
 	}
 
-    public void modify() {
-        
-    }
+	/* removes choice prompt */
+	protected void _modify(){
+	}
 
     public void take() {
         

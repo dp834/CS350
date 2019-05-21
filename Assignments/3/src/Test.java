@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,9 +32,10 @@ public class Test extends Survey {
     	questions.add(question);
     }
 
-    public void modify() {
-        
-    }
+	protected void _modify(int questionOption){
+		super._modify(questionOption);
+		this.questions.get(questionOption).modifyAnswer();	
+	}
 
     public void take() {
         
@@ -49,28 +49,11 @@ public class Test extends Survey {
         
     }
 
-	public Test loadFromFile() {
-		@SuppressWarnings("static-access")
-		File folder = new File(this.FOLDER_PATH);
-		File files[] = folder.listFiles();
+	protected Test _loadFromFile(String fileName){
 		Test test = this;
-		if(files == null) {
-			this.out.promptUser("Error getting saved " + this.getFormType());
-			return test;
-		}
-
-		this.out.promptUser("Please enter the name of the " + this.getFormType() + " you would like to load");
-		for(File file: files) {
-			String f = file.getName();
-			if(f.endsWith("." + this.getFormType())) {
-				this.out.promptUser(f);
-			}
-		}
-		String response = this.in.getUserResponse();
-		
 		try {
 			@SuppressWarnings("static-access")
-			FileInputStream streamIn = new FileInputStream(this.FOLDER_PATH + response);
+			FileInputStream streamIn = new FileInputStream(this.FOLDER_PATH + fileName);
 			ObjectInputStream objStreamIn = new ObjectInputStream(streamIn);
 			test = (Test) objStreamIn.readObject();
 			objStreamIn.close();
@@ -89,6 +72,7 @@ public class Test extends Survey {
 
 		return test;
 	}
+
 
 	public Test menuHandler(int choice){
 		switch(choice)

@@ -52,9 +52,19 @@ public class MultipleChoice extends Question {
 		}
     }
 
-    public void modify() {
-        
-    }
+	protected void _modifyChoices(){
+		this.out.promptUser("Which choice do you want to modify?");
+		char choice = 'a';
+    	for( String opt : this.choices ){
+			this.out.promptUser(choice++ + ") " + opt);   
+		} 
+		String userResponse = this.in.getUserResponse();
+		while(userResponse.length() != 1 || userResponse.charAt(0) < 'a' || userResponse.charAt(0) > 'a'+this.numberOfChoices){
+			this.out.promptUser("Please enter the character corresponding to your choice");
+		}
+		this.out.promptUser("Enter the new choice");
+		this.choices[userResponse.charAt(0) - 'a'] = this.in.getUserResponse();
+	}
 
     public void take() {
         

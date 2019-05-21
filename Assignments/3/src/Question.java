@@ -35,8 +35,50 @@ public abstract class Question implements Serializable{
     abstract public void display(); 
 
     public void modify() {
-        
+		if(this.getYesNo("Do you wish to modify the prompt?")){
+			this._modifyPrompt();
+		}
+		this._modify();
     }
+
+	protected void _modify(){
+		if(this.getYesNo("Do you wish to modify the choices?")){
+			this._modifyChoices();
+		}
+	}
+
+	protected boolean getYesNo(String prompt){
+		this.out.promptUser(prompt);
+		String userResponse = this.in.getUserResponse();
+		while(userResponse.compareToIgnoreCase("yes") != 0 && userResponse.compareToIgnoreCase("no") != 0){
+			this.out.promptUser("Enter yes or no");
+			userResponse = this.in.getUserResponse();	
+		}
+		if(userResponse.compareToIgnoreCase("no") == 0){
+			return false;
+		}
+		return true;
+	}
+
+
+	protected void _modifyChoices(){
+		
+	}
+
+	protected void _modifyPrompt(){
+		this.out.promptUser(this.prompt);
+		this.out.promptUser("\nEnter a new prompt:");
+		this.prompt = this.in.getUserResponse();
+	}
+
+	public void modifyAnswer(){
+		if(this.getYesNo("Do you wish to modify the answer? (yes/no)")){
+			this._modifyAnswer();
+		}
+	}
+
+	protected void _modifyAnswer(){
+	}
 
     public void take() {
         
