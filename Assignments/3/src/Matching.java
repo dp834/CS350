@@ -51,16 +51,16 @@ public class Matching extends Question {
 			}
 			this.out.promptUser(str);
 		}
-		if(this.correctAnswer != null ){
-			this.out.promptUser("The correct choice is: " + this.correctAnswer);
+		if(this.responses.getCorrectAnswer() != null ){
+			this.out.promptUser("The correct choice is: " + this.responses.getCorrectAnswer());
 		}
     }
 
     public void _modifyChoices() {
-    	String temp = this.correctAnswer;
-		this.correctAnswer = null;
+    	String temp = this.responses.getCorrectAnswer();
+		this.responses.setCorrectAnswer(null);
 		this.display();
-		this.correctAnswer = temp;
+		this.responses.setCorrectAnswer(temp);
 		int column = 0, choice = 0;	
 		boolean flag = true;
 		do{

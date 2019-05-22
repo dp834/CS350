@@ -5,7 +5,6 @@ public abstract class Question implements Serializable{
 
 	private static final long serialVersionUID = -7734027287665266720L;
 	protected String prompt;
-    protected String correctAnswer;
     protected ResponseCorrectAnswer responses;
     protected transient Input in;
     protected transient Output out;
@@ -14,6 +13,7 @@ public abstract class Question implements Serializable{
     	this.in=in;
     	this.out=out;
 		this.createQuestion();
+		this.responses = new ResponseCorrectAnswer();
     }
 
     public void createQuestion() {
@@ -29,7 +29,7 @@ public abstract class Question implements Serializable{
 
 	public void addAnswer(){
 		this.out.promptUser("Enter the correct Answer");
-		this.correctAnswer = this.in.getUserResponse();
+		this.responses.setCorrectAnswer(this.in.getUserResponse());
 	}
 
     abstract public void display(); 
@@ -78,11 +78,26 @@ public abstract class Question implements Serializable{
 	}
 
 	protected void _modifyAnswer(){
+		this.addAnswer();
 	}
 
     public void take() {
-        
+       this.out.promptUser(this.prompt);
+	   this._take(); 
+
+	   String response = "";
+	   while(!this.validResponse(response)){
+		   response = this.in.getUserResponse();
+	   }
+	   this.responses.addResponse(response);
     }
+
+	protected boolean validResponse(String response){
+		return response.length() > 0;
+	}
+
+	protected void _take(){
+	}
 
     public void tabulate() {
         

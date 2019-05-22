@@ -47,8 +47,8 @@ public class MultipleChoice extends Question {
     	for( String opt : this.choices ){
 			this.out.promptUser(choice++ + ") " + opt);   
 		} 
-		if(this.correctAnswer != null ){
-			this.out.promptUser("The correct choice is: " + this.correctAnswer);
+		if(this.responses.getCorrectAnswer() != null ){
+			this.out.promptUser("The correct choice is: " + this.responses.getCorrectAnswer());
 		}
     }
 
@@ -65,10 +65,32 @@ public class MultipleChoice extends Question {
 		this.out.promptUser("Enter the new choice");
 		this.choices[userResponse.charAt(0) - 'a'] = this.in.getUserResponse();
 	}
+	
+	protected void _take(){
+		char choice = 'a';
+    	for( String opt : this.choices ){
+			this.out.promptUser(choice++ + ") " + opt);   
+		} 
+	}
 
-    public void take() {
-        
-    }
+	protected boolean validResponse(String response){
+		boolean valid = false;	
+		if(response.length() < 1){
+			return false;
+		}
+
+		for(char a : response.toCharArray()){
+			if( a == ' ' || a == ','){
+				continue;
+			}
+			if( a - 'a' >= 0 && a - 'a' < this.numberOfChoices){
+				valid = true;
+			}else{
+				return false;
+			}
+		}
+		return valid;
+	}
 
     public void tabulate() {
         

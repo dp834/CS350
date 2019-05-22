@@ -23,9 +23,18 @@ public class TrueFalse extends MultipleChoice {
 	protected void _modify(){
 	}
 
-    public void take() {
-        
+    public void _take() {
+       this.out.promptUser("[T]rue|[F]alse"); 
     }
+
+	protected boolean validResponse(String response){
+		if(response.compareToIgnoreCase("t") == 0 || response.compareToIgnoreCase("true") == 0){
+			return true;
+		}else if(response.compareToIgnoreCase("false") == 0 || response.compareToIgnoreCase("false") == 0){
+			return true;
+		}
+		return false;
+	}
 
     public void tabulate() {
         

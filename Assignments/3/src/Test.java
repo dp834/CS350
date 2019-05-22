@@ -37,10 +37,6 @@ public class Test extends Survey {
 		this.questions.get(questionOption).modifyAnswer();	
 	}
 
-    public void take() {
-        
-    }
-
     public void tabulate() {
         
     }

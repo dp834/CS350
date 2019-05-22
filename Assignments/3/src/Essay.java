@@ -20,9 +20,9 @@ public class Essay extends Question {
         
     }
 
-    public void take() {
-        
-    }
+	protected boolean validResponse(String response){
+		return response.length() > 0;
+	}	
 
     public void tabulate() {
         

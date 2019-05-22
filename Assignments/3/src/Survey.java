@@ -205,7 +205,14 @@ public class Survey implements Serializable{
 	}
 
 	public void take() {
-
+		if(this.name == null || this.name.compareTo("") == 0){
+			this.out.promptUser("Please load a " + this.getFormType() + " to take\n\n");
+			return;
+		}
+		for(Question q : this.questions){
+			q.take();
+		}
+		this.saveToFile();
 	}
 
 	public void tabulate() {

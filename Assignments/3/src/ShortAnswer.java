@@ -22,8 +22,8 @@ public class ShortAnswer extends Essay {
     public void display() {
         this.out.promptUser(this.prompt);
 		this.out.promptUser("Character limit: " + this.characterLimit);
-		if(this.correctAnswer != null){
-			this.out.promptUser("The correct choice is: " + this.correctAnswer);
+		if(this.responses.getCorrectAnswer() != null){
+			this.out.promptUser("The correct choice is: " + this.responses.getCorrectAnswer());
 		}
     }
 
@@ -49,8 +49,12 @@ public class ShortAnswer extends Essay {
 		this.getCharacterLimit();
 	}
 
-    public void take() {
-        
+	protected boolean validResponse(String response){
+		return super.validResponse(response) && response.length() <= this.characterLimit;
+	}	
+	
+    public void _take() {
+       this.out.promptUser("Character limit: " + this.characterLimit); 
     }
 
     public void tabulate() {
