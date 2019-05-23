@@ -20,15 +20,16 @@ public class Essay extends Question {
         
     }
 
-	protected boolean validResponse(String response){
-		return response.length() > 0;
+	protected String validResponse(String response){
+		String resp = (response.length() > 0) ? response : null;
+		if(resp == null) {
+			this.out.promptUser("Please enter your response");
+		}
+		return resp;
 	}	
 
-    public void tabulate() {
-        
-    }
-
-    public ArrayList<Boolean> grade() {
+	/* Essays cannot be graded */
+	public ArrayList<Boolean> grade() {
 		return null;
     }
 }

@@ -1,10 +1,12 @@
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class MultipleChoice extends Question {
 
 	private static final long serialVersionUID = -7962475311863650987L;
 	protected String[] choices;
 	protected int numberOfChoices;
+	protected int requiredAnswers;
 
     public MultipleChoice(Input in, Output out) {
 		super(in, out);
@@ -28,7 +30,7 @@ public class MultipleChoice extends Question {
 					this.out.promptUser("Must have at least 2 options");
 				}
 			}catch(NumberFormatException e){
-				this.out.promptUser("Must ender a number");
+				this.out.promptUser("Must enter a number");
 			}
 		}
 		this.choices = new String[numberOfChoices];
@@ -39,10 +41,25 @@ public class MultipleChoice extends Question {
 			this.out.promptUser("Enter choice #" + (i + 1));
 			this.choices[i] = this.in.getUserResponse();
 		}
+		while(this.requiredAnswers >= this.numberOfChoices || this.requiredAnswers < 1){
+			this.out.promptUser("How many choices should be selected?");
+			try{
+				this.requiredAnswers = Integer.parseInt(this.in.getUserResponse());
+				if(this.requiredAnswers >= this.numberOfChoices){
+					this.out.promptUser("Must require less than the total number of options");
+				}else if (this.requiredAnswers < 0) {
+					this.out.promptUser("Must require at least one option");
+				}
+			}catch(NumberFormatException e){
+				this.out.promptUser("Must enter a number");
+			}
+		}
+
 	}
 
     public void display() {
-		this.out.promptUser(this.prompt);	
+		this.out.promptUser(this.prompt);
+		this.out.promptUser("Must select " + this.requiredAnswers + " options");
 		char choice = 'a';
     	for( String opt : this.choices ){
 			this.out.promptUser(choice++ + ") " + opt);   
@@ -66,38 +83,56 @@ public class MultipleChoice extends Question {
 		this.choices[userResponse.charAt(0) - 'a'] = this.in.getUserResponse();
 	}
 	
-	protected void _take(){
+	protected String _take(){
+    	return super._take();
+	}
+	
+	protected void showChoices() {
 		char choice = 'a';
     	for( String opt : this.choices ){
 			this.out.promptUser(choice++ + ") " + opt);   
 		} 
 	}
 
-	protected boolean validResponse(String response){
-		boolean valid = false;	
-		if(response.length() < 1){
-			return false;
-		}
-
-		for(char a : response.toCharArray()){
+	protected String validResponse(String response){
+		char[] answers = new char[this.requiredAnswers];	
+		int i = 0;
+		for(char a : response.toLowerCase().toCharArray()){
 			if( a == ' ' || a == ','){
 				continue;
 			}
 			if( a - 'a' >= 0 && a - 'a' < this.numberOfChoices){
-				valid = true;
+				if( i < answers.length){
+					answers[i] = a;
+					i += 1;
+				}else{
+					this.out.promptUser("Please select from the options above");
+					return null;
+				}
 			}else{
-				return false;
+				this.out.promptUser("Please select from the options above");
+				return null;
 			}
 		}
-		return valid;
+		if(i != this.requiredAnswers){
+			this.out.promptUser("Please selected " + this.requiredAnswers + " options entered on the same line (ex ab or ac)");
+			return null;
+		}
+		Arrays.sort(answers);
+		return new String(answers);
 	}
-
-    public void tabulate() {
-        
-    }
-
-    public ArrayList<Boolean> grade() {
-		return null;
-        
+	
+	protected void _showTabulation(HashMap<String, Integer> tab) {
+    	if(this.requiredAnswers > 1) {
+    		for(String key : tab.keySet()) {
+    			this.out.promptUser(tab.get(key) + "\n" + this.answerToHumanReadable(key));
+    		}
+    	}else {
+    		char choice = 'a';
+        	for(int i = 0; i < this.numberOfChoices; i++) {
+        		Object count = tab.get(Character.toString(choice));
+        		this.out.promptUser(choice++ + ": " + ((count == null)? 0 : (int)count));
+        	}
+        }
     }
 }

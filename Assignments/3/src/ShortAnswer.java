@@ -49,20 +49,24 @@ public class ShortAnswer extends Essay {
 		this.getCharacterLimit();
 	}
 
-	protected boolean validResponse(String response){
-		return super.validResponse(response) && response.length() <= this.characterLimit;
+	protected String validResponse(String response){
+		if(super.validResponse(response) == null) {
+			return null;
+		}
+		String resp = (response.length() <= this.characterLimit) ? response : null;
+		if(resp == null) {
+			this.out.promptUser("Too many characters entered. Limit is " + this.characterLimit);
+		}
+		return resp;
+		
 	}	
 	
-    public void _take() {
-       this.out.promptUser("Character limit: " + this.characterLimit); 
-    }
-
-    public void tabulate() {
-        
-    }
-
     public ArrayList<Boolean> grade() {
-		return null;
-        
+    	return this.responses.grade();    
+    }
+	
+    public String _take() {
+       this.out.promptUser("Character limit: " + this.characterLimit); 
+       return super._take();
     }
 }

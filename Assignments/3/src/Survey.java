@@ -39,6 +39,7 @@ public class Survey implements Serializable{
 	protected ArrayList<Question> questions;
 	protected transient Input in;
 	protected transient Output out;
+	protected int timesTaken;
 
 
 	public Survey(Input input, Output output) {
@@ -46,6 +47,7 @@ public class Survey implements Serializable{
 		this.out = output;
 		this.questions = new ArrayList<Question>();
 		this.name = "";
+		this.timesTaken = 0;
 	}
 
 	public Survey createNew() {
@@ -212,11 +214,20 @@ public class Survey implements Serializable{
 		for(Question q : this.questions){
 			q.take();
 		}
+		this.timesTaken++;
 		this.saveToFile();
 	}
 
 	public void tabulate() {
-
+		if(this.name == null || this.name.compareTo("") == 0){
+			this.out.promptUser("Please load a " + this.getFormType() + " to tabulate\n\n");
+			return;
+		}
+		this.out.promptUser("Tabulation for " + this.getFormType() + " " + this.name);
+		for(Question q : this.questions){
+			this.out.promptUser("");
+			q.tabulate();
+		}
 	}
 
 	public Survey loadFromFile() {
@@ -239,7 +250,7 @@ public class Survey implements Serializable{
 		
 	}
 
-	private Survey _loadFromFile(String fileName){
+	protected Survey _loadFromFile(String fileName){
 		Survey survey = this;
 		try {
 			@SuppressWarnings("static-access")
@@ -269,7 +280,8 @@ public class Survey implements Serializable{
 	}
 	
 	public String getMenuPrompt(){
-		String prompt = "Please enter the number corresponding to your choice\n" + 
+		String prompt = "\n------------------------------------------------\n" + 
+			"Please enter the number corresponding to your choice\n" + 
 			"Survey Menu\n" +
 			"1) Create new Survey\n" +
 			"2) Display a Survey\n" +
@@ -300,7 +312,6 @@ public class Survey implements Serializable{
 			case MENU_OPTION_SAVE:
 				{
 					this.saveToFile();
-					out.promptUser("Cannot save an empty form");
 					break;
 				}
 			case MENU_OPTION_MODIFY:

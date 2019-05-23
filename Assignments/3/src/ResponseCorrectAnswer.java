@@ -33,13 +33,19 @@ public class ResponseCorrectAnswer implements Serializable{
 		if(this.correctAnswer == null || this.correctAnswer.compareTo("") == 0){
 			return null;
         }
+		for(String response : this.responses) {
+			results.add(response.compareToIgnoreCase(this.correctAnswer) == 0);
+		}
 		return results;
     }
 
 
     public HashMap<String, Integer> tabulate() {
-		return null;
-        
+		HashMap<String, Integer> tabulated = new HashMap<String, Integer>();
+		for(String response : this.responses) {
+			tabulated.merge(response, 1, Integer::sum);
+		}	
+		return tabulated;
     }
 
 }

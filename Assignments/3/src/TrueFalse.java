@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TrueFalse extends MultipleChoice {
 
@@ -23,25 +23,37 @@ public class TrueFalse extends MultipleChoice {
 	protected void _modify(){
 	}
 
-    public void _take() {
-       this.out.promptUser("[T]rue|[F]alse"); 
-    }
-
-	protected boolean validResponse(String response){
-		if(response.compareToIgnoreCase("t") == 0 || response.compareToIgnoreCase("true") == 0){
-			return true;
-		}else if(response.compareToIgnoreCase("false") == 0 || response.compareToIgnoreCase("false") == 0){
-			return true;
-		}
-		return false;
+	public void display(){
+		this.out.promptUser(this.prompt);	
+    	this.out.promptUser("[T]rue\n[F]alse"); 
 	}
 
-    public void tabulate() {
-        
+
+    public String _take() {
+    	String response = "";
+    	this.out.promptUser("[T]rue\n[F]alse");
+  	   	do{
+  	   		response = this.validResponse(this.in.getUserResponse());
+  	   	}while(response == null);
+  	   	return response;
+    	
     }
 
-    public ArrayList<Boolean> grade() {
+	protected String validResponse(String response){
+		if(response.compareToIgnoreCase("t") == 0 || response.compareToIgnoreCase("true") == 0){
+			return "True";
+		}else if(response.compareToIgnoreCase("f") == 0 || response.compareToIgnoreCase("false") == 0){
+			return "False";
+		}
+		this.out.promptUser("Please enter t/true for true or f/false for false");
 		return null;
-        
-    }
+	}
+	
+	protected void _showTabulation(HashMap<String, Integer> tab) {
+    	Object count = tab.get("True");
+		this.out.promptUser("True" + ": " + ((count == null)? 0 : (int)count));
+		count = tab.get("False");
+		this.out.promptUser("False" + ": " + ((count == null)? 0 : (int)count));
+    	
+	}
 }

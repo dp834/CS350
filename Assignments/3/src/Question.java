@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Question implements Serializable{
 
@@ -28,8 +29,13 @@ public abstract class Question implements Serializable{
 	abstract protected String getQuestionType();
 
 	public void addAnswer(){
-		this.out.promptUser("Enter the correct Answer");
-		this.responses.setCorrectAnswer(this.in.getUserResponse());
+		String answer = null;
+		this.display();
+		while(answer == null){
+			this.out.promptUser("Enter the correct Answer");
+			answer = this.validResponse(this.in.getUserResponse());
+		}
+		this.responses.setCorrectAnswer(answer);
 	}
 
     abstract public void display(); 
@@ -40,6 +46,17 @@ public abstract class Question implements Serializable{
 		}
 		this._modify();
     }
+
+	protected String getCorrectAnswer(){
+		return this.answerToHumanReadable(this.responses.getCorrectAnswer());
+	}
+
+	protected String answerToHumanReadable(String parsed){
+		if(parsed == null) {
+			return "";
+		}
+		return parsed;
+	}
 
 	protected void _modify(){
 		if(this.getYesNo("Do you wish to modify the choices?")){
@@ -78,41 +95,70 @@ public abstract class Question implements Serializable{
 	}
 
 	protected void _modifyAnswer(){
+		this.out.promptUser("Previous Answer:");
+		this.out.promptUser(this.getCorrectAnswer());
+		this.responses.setCorrectAnswer(null);
 		this.addAnswer();
 	}
 
     public void take() {
        this.out.promptUser(this.prompt);
-	   this._take(); 
-
-	   String response = "";
-	   while(!this.validResponse(response)){
-		   response = this.in.getUserResponse();
-	   }
+       this.showChoices();
+	   String response = this._take(); 
 	   this.responses.addResponse(response);
     }
+    
+    protected void showChoices() {
+    	
+    }
 
-	protected boolean validResponse(String response){
-		return response.length() > 0;
+	protected String validResponse(String response){
+		if(response.length() > 0){
+			return "";
+		}
+		this.out.promptUser("Please enter your response");
+		return null;
 	}
 
-	protected void _take(){
+	protected String _take(){
+	   String response = "";
+	   do{
+		   response = this.validResponse(this.in.getUserResponse());
+	   }while(response == null);
+	   return response;
 	}
 
     public void tabulate() {
-        
+    	this.out.promptUser("Question:");
+    	this.display();
+    	this.out.promptUser("Replies:");
+    	for(String response : this.responses.getResponses()) {
+    		this.out.promptUser(this.answerToHumanReadable(response));
+    	}
+    	this.out.promptUser("Tabulation:");
+    	this._showTabulation(this.responses.tabulate());
+    	    
+    }
+    
+    protected void _showTabulation(HashMap<String, Integer> tab) {
+    	for(String key : tab.keySet()) {
+    		this.out.promptUser(tab.get(key) + "\n" + this.answerToHumanReadable(key));
+    	}
+    }
+    
+    public String getResponseN(int i) {
+    	if(this.responses.getResponses().size() <= i) {
+    		return "";
+    	}
+    	return this.answerToHumanReadable(this.responses.getResponses().get(i));
     }
 
-    /**
-     * @return
-     */
     public ArrayList<Boolean> grade() {
-    	return null;    
+    	return this.responses.grade();    
     }
-
+    
     public void setIO(Input in, Output out) {
     	this.in = in;
     	this.out = out;
     }
-
 }

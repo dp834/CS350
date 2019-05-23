@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class Test extends Survey {
 
@@ -37,12 +38,46 @@ public class Test extends Survey {
 		this.questions.get(questionOption).modifyAnswer();	
 	}
 
-    public void tabulate() {
-        
-    }
-
     public void grade() {
-        
+    	if(this.name == null || this.name.compareTo("") == 0){
+			this.out.promptUser("Please load a " + this.getFormType() + " to tabulate\n\n");
+			return;
+		}
+    	ArrayList<ArrayList<Boolean>> gradedQuestions = new ArrayList<ArrayList<Boolean>>();
+		for(Question q : this.questions){
+			gradedQuestions.add(q.grade());
+		} 
+		this.showAllGrades(gradedQuestions);
+		
+    }
+    
+    protected void showAllGrades(ArrayList<ArrayList<Boolean>> allGrades) {
+    	for(int i = 0; i < allGrades.get(0).size(); i++) {
+    		int j=0;
+    		int correct = 0;
+    		int possible = 0;
+    		this.out.promptUser("***************************************************");
+    		this.out.promptUser("Grading response " + (j+1));
+    		for(Question q : this.questions) {
+    			this.out.promptUser("\nQuestion" + (j + 1) + ":");
+    			q.display();
+    			this.out.promptUser("Response: ");
+    			this.out.promptUser(q.getResponseN(i));
+    			if(allGrades.get(j) == null) {
+    				this.out.promptUser("Question wasn't Graded");
+    			}else {
+    				possible++;
+    				if(allGrades.get(j).get(i)) {
+    					correct++;
+    					this.out.promptUser("Correct");
+    				}else {
+    					this.out.promptUser("Incorrect");
+    				}
+    			}
+    			j++;
+    		}
+    		this.out.promptUser("Score: " + correct + "/" + possible + " = " + ((double)correct)/possible*100 + "%");
+    	}
     }
 
 	protected Test _loadFromFile(String fileName){
@@ -91,7 +126,8 @@ public class Test extends Survey {
 	}
     
 	public String getMenuPrompt(){
-		String prompt = "Please enter the number corresponding to your choice\n" + 
+		String prompt = "\n------------------------------------------------\n" + 
+			"Please enter the number corresponding to your choice\n" + 
 			"Test Menu\n" +
 			"1) Create new Test \n" +
 			"2) Display a Test \n" +
